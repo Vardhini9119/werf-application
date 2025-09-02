@@ -1,0 +1,27 @@
+name: Werf CI/CD
+
+# The event that triggers the workflow
+on:
+  push:
+    branches:
+      - main # The branch to monitor for new commits
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up werf
+        uses: werf/actions/setup@v1.2
+
+      - name: Login to Docker registry
+        # You will use a secret here to securely store your registry credentials
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Werf converge (build and deploy)
+        # This is the core werf command. It builds the image and deploys
+        # it to the Kubernetes cluster based on your werf.yaml and Helm charts.
+        run: werf converge --repo your-registry.io/your-app --kube-config-base64 ${{ secrets.KUBE_CONFIG }}
