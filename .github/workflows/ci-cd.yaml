@@ -22,6 +22,4 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Werf converge (build and deploy)
-        # This is the core werf command. It builds the image and deploys
-        # it to the Kubernetes cluster based on your werf.yaml and Helm charts.
-        run: werf converge --repo docker.io/application --kube-config-base64 ${{ secrets.KUBE_CONFIG }}
+        run: werf converge  --repo docker.io/${{ secrets.DOCKER_USERNAME }}/app-git --kube-config-base64 "${{ secrets.KUBE_CONFIG }}"
