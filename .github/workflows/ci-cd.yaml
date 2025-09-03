@@ -1,10 +1,9 @@
 name: Werf CI/CD
 
-# The event that triggers the workflow
 on:
   push:
     branches:
-      - main # The branch to monitor for new commits
+      - main
 
 jobs:
   deploy:
@@ -13,13 +12,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Log in to Azure
+        run: |
+          az login --service-principal \
+            -u ${{ secrets.AZURE_CLIENT_ID }} \
+            -p ${{ secrets.AZURE_CLIENT_SECRET }} \
+            --tenant ${{ secrets.AZURE_TENANT_ID }}
+          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Set up AKS kubeconfig
+        run: |
+          az aks get-credentials \
+            --resource-group test \
+            --name cluster \
+            --overwrite-existing
+
       - name: Set up werf
         uses: werf/actions/install@v1.2
 
-      - name: Login to Docker registry
-        # You will use a secret here to securely store your registry credentials
+      - name: Docker login
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Werf converge (build and deploy)
-        run: werf converge  --repo docker.io/${{ secrets.DOCKER_USERNAME }}/app-git --kube-config-base64 "${{ secrets.KUBE_CONFIG }}"
+        run: |
+          werf converge --repo docker.io/${{ secrets.DOCKER_USERNAME }}/app-git
