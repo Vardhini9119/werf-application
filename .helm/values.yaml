@@ -4,10 +4,10 @@ azure:
   providerConfigName: azur-creds
   secretNamespace: crossplane-system
   credentials:
-    clientId: 
-    clientSecret: 
-    tenantId: 
-    subscriptionId: 
+    clientId: ""
+    clientSecret: ""
+    tenantId: ""
+    subscriptionId: "" 
 
   resourceGroup:
     enabled: true
