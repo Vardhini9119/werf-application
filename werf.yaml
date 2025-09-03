@@ -1,4 +1,4 @@
-project: simple-webapp-flask
+project: simple-webapp-flask-one
 configVersion: 1
 ---
 image: webapp
