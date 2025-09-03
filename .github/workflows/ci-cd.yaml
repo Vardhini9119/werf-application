@@ -24,4 +24,4 @@ jobs:
       - name: Werf converge (build and deploy)
         # This is the core werf command. It builds the image and deploys
         # it to the Kubernetes cluster based on your werf.yaml and Helm charts.
-        run: werf converge --repo your-registry.io/your-app --kube-config-base64 ${{ secrets.KUBE_CONFIG }}
+        run: werf converge --repo docker.io/application --kube-config-base64 ${{ secrets.KUBE_CONFIG }}
