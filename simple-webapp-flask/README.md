@@ -7,7 +7,7 @@ This is used in the demonstration of the development of Ansible Playbooks.
   
   - **Install all required dependencies**
   - **Install and Configure Web Server**
-  - **Start Web Server**
+  - **Start Web Server from**
    
 ## 1. Install all required dependencies
   
@@ -41,3 +41,4 @@ Open a browser and go to URL
 http://<IP>:5000                            => Welcome
 http://<IP>:5000/how%20are%20you            => I am good, how about you?
 ```
+
