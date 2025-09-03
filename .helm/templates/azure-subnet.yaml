@@ -1,0 +1,17 @@
+{{- if and .Values.azure .Values.azure.enabled .Values.azure.vnet.enabled .Values.azure.vnet.subnet.enabled }}
+---
+apiVersion: network.azure.upbound.io/v1beta1
+kind: Subnet
+metadata:
+  name: {{ .Values.azure.vnet.subnet.subnetName | default .Values.azure.vnet.subnetName }}
+spec:
+  forProvider:
+    addressPrefixes:
+      - {{ .Values.azure.vnet.subnet.addressPrefix | default "10.0.1.0/24" }}
+    virtualNetworkName: {{ .Values.azure.vnet.vnetName }}
+    resourceGroupName: {{ .Values.azure.resourceGroup.name }}
+  providerConfigRef:
+    name: {{ .Values.azure.providerConfigName }}
+{{- end }}
+
+
